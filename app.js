@@ -15,7 +15,7 @@ bookRouter.route('/Books').get(function (req, res) {
     var query = {};
 
     //Validation
-    if(req.query.genre){
+    if (req.query.genre) {
         query.genre = req.query.genre;
     }
 
@@ -26,6 +26,18 @@ bookRouter.route('/Books').get(function (req, res) {
         }
         else
             res.json(books);
+    });
+});
+
+bookRouter.route('/Books/:bookId').get(function (req, res) {
+
+    Book.findById(req.params.bookId, function (err, book) {
+        if (err) {
+            console.log(err);
+            res.status(500).send(err);
+        }
+        else
+            res.json(book);
     });
 });
 
