@@ -27,13 +27,25 @@ var bookController = function (Book) {
                 console.log(err);
                 res.status(500).send(err);
             }
-            else
-                res.json(books);
+            else {
+                var returnBooks = [];
+                books.forEach(function (element, index, array) {
+                    var newBook = element.toJSON();
+                    newBook.links = {};
+                    newBook.links.self = 'http://' + req.headers.host + '/api/books/' + newBook._id;
+                    returnBooks.push(newBook);
+                });
+                res.json(returnBooks);
+            }
         });
     };
 
     var getById = function (req, res) {
-        res.json(req.book);
+        var returnBook = req.book.toJSON();
+        var newLink = 'http://' + req.headers.host + '/api/books/?genre=' + returnBook.genre;
+        returnBook.links = {};
+        returnBook.links.filterByThisGenre = newLink.replace(' ', '%20');
+        res.json(returnBook);
     };
 
     var put = function (req, res) {

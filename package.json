@@ -18,5 +18,8 @@
     "nodemon": "^1.9.2",
     "should": "^9.0.2",
     "sinon": "^1.17.4"
+  },
+  "devDependencies": {
+    "superfast": "^0.2.5"
   }
 }
